@@ -31,7 +31,7 @@ In this guide, you will build a simple Ballerina service that generates an UUID 
 - [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/)
 
 ### Optional requirements
-- Ballerina IDE plugins ([IntelliJ IDEA](https://plugins.jetbrains.com/plugin/9520-ballerina), [VSCode](https://marketplace.visualstudio.com/items?itemName=WSO2.Ballerina)
+- Ballerina IDE plugins ([IntelliJ IDEA](https://plugins.jetbrains.com/plugin/9520-ballerina), [VSCode](https://marketplace.visualstudio.com/items?itemName=WSO2.Ballerina))
 
 ## Implementation
 
@@ -98,7 +98,7 @@ service<http:Service> uuid_service bind uuid_ep {
 
 }
 ```
-We will be building a Docker image here, and publishing it to Docker Hub. This is required, since we cannot simply have the Docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the Docker image in a globally accessible location. For this, an image name should be given in the format <username>/image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build docker image to Docker Hub.
+We will be building a Docker image here, and publishing it to Docker Hub. This is required, since we cannot simply have the Docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the docker image in a globally accessible location. For this, an image name should be given in the format <username>/image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build docker image to Docker Hub.
 
 You can build the Ballerina service using `$ ballerina build uuid_service.bal`. You should be able to see the following output. 
 
@@ -213,7 +213,7 @@ uuid-gen           LoadBalancer   10.0.157.35    40.117.59.238   8080:31744/TCP 
 
 ## Testing
 
-You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL "http://<EXTERNAL-IP>:8080", or by running the following cURL command:
+You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL "http://EXTERNAL-IP:8080", or by running the following cURL command:
 
 ```bash
 $ curl http://<EXTERNAL-IP>:8080/
