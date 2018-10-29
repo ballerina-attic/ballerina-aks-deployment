@@ -213,7 +213,7 @@ uuid-gen           LoadBalancer   10.0.157.35    40.117.59.238   8080:31744/TCP 
 
 ## Testing
 
-You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL "http://EXTERNAL-IP:8080", or by running the following cURL command:
+You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL ([http://<EXTERNAL-IP>:8080/](http://<EXTERNAL-IP>:8080/), or by running the following cURL command:
 
 ```bash
 $ curl http://<EXTERNAL-IP>:8080/
