@@ -1,7 +1,8 @@
 [![Build Status](https://travis-ci.org/ballerina-guides/ballerina-aks-deployment.svg?branch=master)](https://travis-ci.org/ballerina-guides/ballerina-aks-deployment)
 
 # Deployment Ballerina with Azure Kubernetes Service
-[AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/) provides an easy to use hosted Kubernetes cluster service, which drastically reduces your time to setup your own infrastructure 
+
+[AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/) provides an easy to use hosted Kubernetes cluster service, which drastically reduces your time to setup your own infrastructure.
 
 > In this guide you will learn about building a Ballerina service and deploying it on Azure Kubernetes Service (AKS).
 
@@ -14,9 +15,11 @@ The following are the sections available in this guide.
 - [Testing](#testing)
 
 ## What you’ll build 
-In this guide, you will build a simple Ballerina service that generates an UUID each time, and you will deploy that service on AKS. 
+
+In this guide, you will build a simple Ballerina service that generates an UUID each time, and you will deploy this service on AKS. 
 
 ## Compatibility
+
 | Ballerina Language Version 
 | -------------------------- 
 | 0.982.0
@@ -31,6 +34,7 @@ In this guide, you will build a simple Ballerina service that generates an UUID 
 - [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/)
 
 ### Optional requirements
+
 - Ballerina IDE plugins ([IntelliJ IDEA](https://plugins.jetbrains.com/plugin/9520-ballerina), [VSCode](https://marketplace.visualstudio.com/items?itemName=WSO2.Ballerina))
 
 ## Implementation
@@ -98,7 +102,7 @@ service<http:Service> uuid_service bind uuid_ep {
 
 }
 ```
-We will be building a docker image here, and publishing it to Docker Hub. This is required, since we cannot simply have the docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the docker image in a globally accessible location. For this, an image name should be given in the format <username>/image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build docker image to Docker Hub.
+We will be building a docker image here, and publishing it to Docker Hub. This is required, since we cannot simply have the docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the docker image in a globally accessible location. For this, an image name should be given in the format <<username>>/image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build docker image to Docker Hub.
 
 You can build the Ballerina service using `$ ballerina build uuid_service.bal`. You should be able to see the following output. 
 
@@ -124,7 +128,10 @@ Generating executable
 After the build is done, the docker image would have been created, and pushed to Docker Hub, and also the Kubernetes deployment artifacts would be generated as well.
     
 ## Deployment
-- Before deploying the service on AKS, you will need to setup the AKS environment to create the Kubernetes cluster and deploy an application
+
+- Configuring AKS environment
+
+Before deploying the service on AKS, you will need to setup the AKS environment to create the Kubernetes cluster and deploy an application.
 
 Let's start by installing the Azure command line utilities (CLI) in our local machine. Please refer to [Azure CLI Installation](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) in finding the steps for the installation.
 
@@ -202,7 +209,7 @@ kubernetes         ClusterIP      10.0.0.1       <none>          443/TCP        
 uuid-gen           LoadBalancer   10.0.157.35    <pending>       8080:31744/TCP   43s
 ```
 
-Here, the "uuid-gen" service's "EXTERNAL-IP" is stated as pending, where this is due to the load balancer service type we defined, and it is still configuring a public IP address which we can use to access the service from outside. After a few seconds, you can check again, and you will get a valid IP address, like the following:-
+Here, the "uuid-gen" service's "EXTERNAL-IP" is stated as pending, where this is due to the load balancer service type we defined, and it is still configuring a public IP address which we can use to access the service from outside. After a few seconds, you can check again, and you will get a valid IP address, similar to the following:
 
 ```bash
 $ kubectl get svc
@@ -213,7 +220,7 @@ uuid-gen           LoadBalancer   10.0.157.35    40.117.59.238   8080:31744/TCP 
 
 ## Testing
 
-You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL ([http://<EXTERNAL-IP>:8080/](http://<EXTERNAL-IP>:8080/), or by running the following cURL command:
+You've just deployed your first Ballerina service in AKS!. You can test out the service using a web browser with the URL ([http://<<EXTERNAL-IP>>:8080/](http://<<EXTERNAL-IP>>:8080/), or by running the following cURL command:
 
 ```bash
 $ curl http://<EXTERNAL-IP>:8080/
