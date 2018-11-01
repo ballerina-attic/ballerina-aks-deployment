@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/ballerina-guides/ballerina-aks-deployment.svg?branch=master)](https://travis-ci.org/ballerina-guides/ballerina-aks-deployment)
 
-# Deployment Ballerina with Azure Kubernetes Service
+# Ballerina Deployment with Azure Kubernetes Service
 
-[AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/) provides an easy to use hosted Kubernetes cluster service, which drastically reduces your time to setup your own infrastructure.
+[Azure Kubernetes Service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) provides an easy to use hosted Kubernetes cluster service, which drastically reduces your time to setup your own infrastructure.
 
 > In this guide you will learn about building a Ballerina service and deploying it on Azure Kubernetes Service (AKS).
 
@@ -102,7 +102,7 @@ service<http:Service> uuid_service bind uuid_ep {
 
 }
 ```
-We will be building a docker image here, and publishing it to Docker Hub. This is required, since we cannot simply have the docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the docker image in a globally accessible location. For this, an image name should be given in the format $username/$image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build docker image to Docker Hub.
+We will be building a Docker image here and publishing it to Docker Hub. This is required, since we cannot simply have the Docker image in the local registry, and run the Kubernetes applicates in AKS, where it needs to have access to the Docker image in a globally accessible location. For this, an image name should be given in the format $username/$image_name in the "image" property, and "username" and "password" properties needs to contain the Docker Hub account username and password respectively. The property "push" is set to "true" to signal the build process to push the build Docker image to Docker Hub.
 
 You can build the Ballerina service using `$ ballerina build uuid_service.bal`. You should be able to see the following output. 
 
@@ -125,7 +125,7 @@ Generating executable
 	helm install --name uuid-service-deployment /home/laf/dev/uuid-service/kubernetes/uuid-service-deployment
 ```
 
-After the build is done, the docker image would have been created, and pushed to Docker Hub, and also the Kubernetes deployment artifacts would be generated as well.
+After the build is complete, the Docker image is created and pushed to Docker Hub. The Kubernetes deployment artifacts are generated as well.
     
 ## Deployment
 
@@ -167,13 +167,13 @@ $ az aks create \
 
 - Configure kubectl to connect to AKS Kubernetes cluster
 
-The following command will get the credentials for a given Kubernetes cluster in AKS.
+The following command gets the credentials for a given Kubernetes cluster in AKS.
 
 ```bash
 $ az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 ```
 
-To verify the connection to your cluster, run "kubectl get nodes" command:
+To verify the connection to your cluster, run `kubectl get nodes` command:
 
 ```bash
 $ kubectl get nodes
@@ -184,7 +184,7 @@ aks-nodepool1-29389471-0   Ready     agent     10d       v1.9.11
 
 - Deploying the Ballerina service to AKS
 
-Since the Kubernetes artifacts has been automatically built in the earlier Ballerina application build, we simply have to run the following command to deploy the Ballerina service in AKS:
+Since the Kubernetes artifacts were automatically built in the earlier Ballerina application build, we simply have to run the following command to deploy the Ballerina service in AKS:
 
 ```bash
 $ kubectl apply -f /home/laf/dev/uuid-service/kubernetes/
@@ -192,7 +192,7 @@ deployment.extensions/uuid-service-deployment created
 service/uuid-gen created
 ```
 
-Listing the pods in Kubernetes will show the current application being deployed successfully:
+When you list the pods in Kubernetes, it shows that the current application was deployed successfully.
 
 ```bash
 $ kubectl get pods
@@ -209,7 +209,7 @@ kubernetes         ClusterIP      10.0.0.1       <none>          443/TCP        
 uuid-gen           LoadBalancer   10.0.157.35    <pending>       8080:31744/TCP   43s
 ```
 
-Here, the "uuid-gen" service's "EXTERNAL-IP" is stated as pending, where this is due to the load balancer service type we defined, and it is still configuring a public IP address which we can use to access the service from outside. After a few seconds, you can check again, and you will get a valid IP address, similar to the following:
+Here, the "uuid-gen" service's "EXTERNAL-IP" is stated as pending. This is due to the load balancer service type we defined and it is still configuring a public IP address, which we can use to access the service from outside. After a few seconds you can check again and see a valid IP address similar to the following:
 
 ```bash
 $ kubectl get svc
