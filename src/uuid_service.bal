@@ -1,6 +1,5 @@
 import ballerina/http;
 import ballerinax/kubernetes;
-import ballerinax/docker;
 import ballerina/system;
 
 @kubernetes:Service {
@@ -8,9 +7,7 @@ import ballerina/system;
     serviceType:"LoadBalancer",
     port:80
 }
-endpoint http:Listener uuid_ep {
-    port:8080
-};
+listener http:Listener uuid_ep = new(8080);
 
 @kubernetes:Deployment {
     enableLiveness:true,
@@ -22,13 +19,13 @@ endpoint http:Listener uuid_ep {
 @http:ServiceConfig {
     basePath:"/"
 }
-service<http:Service> uuid_service bind uuid_ep {
+service uuid_service on uuid_ep {
 
     @http:ResourceConfig {
         path:"/"
     }
-    gen_uuid(endpoint outboundEP, http:Request request) {
-        _ = outboundEP->respond(system:uuid());
+    resource function gen_uuid(http:Caller caller, http:Request request) {
+        _ = caller->respond(system:uuid());
     }
 
 }
