@@ -22,7 +22,7 @@ In this guide, you will build a simple Ballerina service that generates an UUID 
 
 | Ballerina Language Version 
 | -------------------------- 
-| 0.982.0
+| 0.991.0
 
 ## Prerequisites
  
